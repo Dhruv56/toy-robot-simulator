@@ -21,3 +21,11 @@
 .input-container {
   flex: 1;
 }
+
+.table {
+  flex: 1;
+}
+
+.input-output-container {
+  display: flex;
+}

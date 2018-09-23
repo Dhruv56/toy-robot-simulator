@@ -1,4 +1,9 @@
 .input-commands {
   font-family: 'Courier New', Courier, monospace;
   font-size: 12px;
+  width: 100%;
+}
+
+.execute-commands {
+  color: red;
 }

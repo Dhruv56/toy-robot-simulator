@@ -2,37 +2,45 @@ import "./Input.css";
 import React, { Component } from "react";
 
 class Input extends Component {
-  state = {
-    command: "",
-    commands: []
-  };
+  constructor() {
+    super();
+    this.state = { command: "" };
+  }
 
   handleInputChange = e => {
     this.setState({ command: e.target.value });
   };
 
-  getRawCommands = () => {
-    const { command } = this.state;
-    const { applyCommands } = this.props;
-    this.setState(
-      { commands: command.split(/\n/) },
-      function extractCommands() {
-        applyCommands(this.state.commands);
-      }
-    );
+  handleExecuteAll = () => {
+    this.props.executeAllCommands(this.state.command);
+  };
+
+  handleExecuteStepByStep = () => {
+    this.props.executeCommandStepByStep(this.state.command);
+  };
+
+  reset = () => {
+    this.setState({ command: "" });
   };
 
   render() {
     return (
-      <React.Fragment>
+      <div>
         <textarea
           className="input-commands"
           rows={10}
-          cols={100}
+          cols={20}
           onChange={this.handleInputChange}
+          value={this.state.command}
         />
-        <button onClick={this.getRawCommands} />
-      </React.Fragment>
+        <button className="execute-commands" onClick={this.handleExecuteAll}>
+          Execute all
+        </button>
+        <button onClick={this.handleExecuteStepByStep}>
+          Execute step by step
+        </button>
+        <button onClick={this.reset}>Reset</button>
+      </div>
     );
   }
 }

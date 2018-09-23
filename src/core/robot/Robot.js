@@ -1,5 +1,11 @@
 import { Errors } from "../../constants/CommonErrors";
 
+/**
+ * Robot class.
+ * @export
+ * @class Robot
+ */
+//TODO - Pass Erros as Props
 export default class Robot {
   constructor(robotConfig, table) {
     this.robotConfig = robotConfig;
@@ -16,21 +22,13 @@ export default class Robot {
     return this.isFirstStepMade;
   }
 
-  place(x, y, direction) {
+  place = (x, y, direction) => {
     let newCoordinates = {};
 
-    try {
-      newCoordinates = this.validateParams(x, y, direction);
-    } catch (e) {
-      return e;
-    }
+    newCoordinates = this.validateParams(x, y, direction);
 
-    try {
-      if (this.isOutOfTable(newCoordinates.x, newCoordinates.y)) {
-        throw new Error(Errors.placedOutside);
-      }
-    } catch (e) {
-      return e;
+    if (this.isOutOfTable(newCoordinates.x, newCoordinates.y)) {
+      throw new Error(Errors.placedOutside);
     }
 
     this.setRobotPosition(
@@ -45,9 +43,9 @@ export default class Robot {
     }
 
     return this;
-  }
+  };
 
-  move() {
+  move = () => {
     let { x, y, direction } = this.currentPosition;
 
     switch (direction) {
@@ -65,39 +63,35 @@ export default class Robot {
         break;
     }
 
-    try {
-      if (this.isOutOfTable(x, y)) {
-        throw new Error(Errors.wrongMove);
-      }
-    } catch (e) {
-      return e;
+    if (this.isOutOfTable(x, y)) {
+      throw new Error(Errors.wrongMove);
     }
 
     this.setRobotPosition(x, y, direction);
 
     return this;
-  }
+  };
 
-  right() {
-    let { direction } = this.currentPosition;
+  right = () => {
+    const { direction } = this.currentPosition;
     const { directions } = this.robotConfig;
 
     //remove this.currentPosition
-    let newDirection =
+    const newDirection =
       directions.indexOf(direction) + 1 > 3
         ? 0
         : directions.indexOf(direction) + 1;
 
     this.currentPosition.direction = directions[newDirection];
     return this;
-  }
+  };
 
-  left() {
-    let { direction } = this.currentPosition;
+  left = () => {
+    const { direction } = this.currentPosition;
     const { directions } = this.robotConfig;
 
     //remove this.currentPosition
-    let newDirection =
+    const newDirection =
       directions.indexOf(direction) - 1 < 0
         ? 3
         : directions.indexOf(direction) - 1;
@@ -105,29 +99,23 @@ export default class Robot {
     this.currentPosition.direction = directions[newDirection];
 
     return this;
-  }
+  };
 
-  report() {
-    return this.getCurrentPosition();
-  }
+  report = () => this.getCurrentPosition();
 
   setRobotPosition(x, y, direction) {
     this.currentPosition = {
-      x: x,
-      y: y,
-      direction: direction
+      x,
+      y,
+      direction
     };
   }
 
-  getCurrentPosition() {
-    return this.currentPosition;
-  }
+  getCurrentPosition = () => this.currentPosition;
 
-  isOutOfTable(x, y) {
-    return this.table.isOutOfTable(x, y);
-  }
+  isOutOfTable = (x, y) => this.table.isOutOfTable(x, y);
 
-  validateParams(x, y, direction) {
+  validateParams = (x, y, direction) => {
     if (
       !direction ||
       typeof direction !== "string" ||
@@ -149,13 +137,12 @@ export default class Robot {
     }
 
     return {
-      x: x,
-      y: y,
-      direction: direction
+      x,
+      y,
+      direction
     };
-  }
+  };
 
-  isValidDirection(direction) {
-    return this.robotConfig.directions.indexOf(direction.toUpperCase()) !== -1;
-  }
+  isValidDirection = direction =>
+    this.robotConfig.directions.indexOf(direction.toUpperCase()) !== -1;
 }

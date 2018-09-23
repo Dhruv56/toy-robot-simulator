@@ -13,47 +13,58 @@ describe("The Robot", () => {
   });
 
   test("Should throw an error if x,y or direction is missing from the PLACE command", () => {
-    expect(robot.place()).toEqual(new Error(Errors.invalidDirection));
+    function place() {
+      robot.place();
+    }
+    expect(place).toThrowError(new Error(Errors.invalidDirection));
   });
 
   test("should not accept non-int X or Y", () => {
     const x = "foo";
     const y = "5,55";
-    const direction = "North";
-    expect(robot.place(x, y, direction)).toEqual(new Error(Errors.invalidXY));
+    const direction = "NORTH";
+    function place() {
+      robot.place(x, y, direction);
+    }
+    expect(place).toThrowError(new Error(Errors.invalidXY));
   });
 
   test("should not accept negative X or Y", () => {
     const x = -5;
     const y = -5;
-    const direction = "North";
-    expect(robot.place(x, y, direction)).toEqual(new Error(Errors.invalidXY));
+    const direction = "NORTH";
+    function place() {
+      robot.place(x, y, direction);
+    }
+    expect(place).toThrowError(new Error(Errors.invalidXY));
   });
 
   test("should not accept non-string or invalid direction", () => {
     const x = "5";
     const y = "5";
     let direction;
-    expect(robot.place(x, y, direction)).toEqual(
-      new Error(Errors.invalidDirection)
-    );
+
+    function place(x, y, direction) {
+      robot.place(x, y, direction);
+    }
+
+    expect(place).toThrowError(new Error(Errors.invalidDirection));
 
     direction = 10;
-    expect(robot.place(x, y, direction)).toEqual(
-      new Error(Errors.invalidDirection)
-    );
+    expect(place).toThrowError(new Error(Errors.invalidDirection));
 
     direction = "something";
-    expect(robot.place(x, y, direction)).toEqual(
-      new Error(Errors.invalidDirection)
-    );
+    expect(place).toThrowError(new Error(Errors.invalidDirection));
   });
 
   test("should not be placed outside the table", () => {
     const x = 0;
     const y = 6;
     const direction = "north";
-    expect(robot.place(x, y, direction)).toEqual;
+    function place(x, y, direction) {
+      robot.place(x, y, direction);
+    }
+    expect(place).toEqual;
     new Error(Errors.placedOutside);
   });
 
@@ -87,6 +98,7 @@ describe("The Robot", () => {
     const x = 1;
     const y = 1;
     const direction = "south";
+
     expect(robot.place(x, y, direction)).toEqual(robot);
   });
 
@@ -95,7 +107,10 @@ describe("The Robot", () => {
       y = 0,
       direction = "east";
     robot.place(x, y, direction);
-    expect(robot.move()).toEqual(new Error(Errors.wrongMove));
+    function move() {
+      robot.move();
+    }
+    expect(move).toThrowError(new Error(Errors.wrongMove));
   });
 
   test("should successfully make a correct move", () => {
