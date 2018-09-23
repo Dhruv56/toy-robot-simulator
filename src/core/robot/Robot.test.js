@@ -1,6 +1,6 @@
 import Robot from "./Robot";
 import { Errors } from "../../constants/CommonErrors";
-import { ROBOT_CONFIG, TABLE_CONFIG } from "../../config/Config";
+import { ROBOT_CONFIG, TABLE_CONFIG } from "../../configs/Config";
 import Table from "../table/Table";
 
 describe("The Robot", () => {
@@ -17,22 +17,22 @@ describe("The Robot", () => {
   });
 
   test("should not accept non-int X or Y", () => {
-    let x = "foo";
-    let y = "5,55";
-    let direction = "North";
+    const x = "foo";
+    const y = "5,55";
+    const direction = "North";
     expect(robot.place(x, y, direction)).toEqual(new Error(Errors.invalidXY));
   });
 
   test("should not accept negative X or Y", () => {
-    let x = -5;
-    let y = -5;
-    let direction = "North";
+    const x = -5;
+    const y = -5;
+    const direction = "North";
     expect(robot.place(x, y, direction)).toEqual(new Error(Errors.invalidXY));
   });
 
   test("should not accept non-string or invalid direction", () => {
-    let x = "5";
-    let y = "5";
+    const x = "5";
+    const y = "5";
     let direction;
     expect(robot.place(x, y, direction)).toEqual(
       new Error(Errors.invalidDirection)
@@ -50,19 +50,19 @@ describe("The Robot", () => {
   });
 
   test("should not be placed outside the table", () => {
-    let x = 0;
-    let y = 6;
-    let direction = "north";
+    const x = 0;
+    const y = 6;
+    const direction = "north";
     expect(robot.place(x, y, direction)).toEqual;
     new Error(Errors.placedOutside);
   });
 
   test("should update x,y and direction upon successful place", () => {
-    let x = 2;
-    let y = 2;
-    let direction = "south";
+    const x = 2;
+    const y = 2;
+    const direction = "south";
     robot.place(x, y, direction);
-    let currentPosition = robot.getCurrentPosition();
+    const currentPosition = robot.getCurrentPosition();
 
     expect(
       currentPosition.x === x &&
@@ -84,9 +84,9 @@ describe("The Robot", () => {
   // });
 
   test("should return itself if PLACE was successful", () => {
-    let x = 1;
-    let y = 1;
-    let direction = "south";
+    const x = 1;
+    const y = 1;
+    const direction = "south";
     expect(robot.place(x, y, direction)).toEqual(robot);
   });
 
@@ -99,13 +99,13 @@ describe("The Robot", () => {
   });
 
   test("should successfully make a correct move", () => {
-    let x = 1;
-    let y = 1;
-    let direction = "north";
+    const x = 1;
+    const y = 1;
+    const direction = "north";
 
     robot.place(x, y, direction);
     robot.move();
-    let currentPosition = robot.getCurrentPosition();
+    const currentPosition = robot.getCurrentPosition();
 
     expect(
       currentPosition.x == x &&
@@ -115,18 +115,18 @@ describe("The Robot", () => {
   });
 
   test("should turn right", () => {
-    let x = 1;
-    let y = 1;
-    let direction = "north";
+    const x = 1;
+    const y = 1;
+    const direction = "north";
     robot.place(x, y, direction);
     robot.right();
     expect(robot.getCurrentPosition().direction).toEqual("EAST");
   });
 
   test("should turn left", () => {
-    let x = 1;
-    let y = 1;
-    let direction = "north";
+    const x = 1;
+    const y = 1;
+    const direction = "north";
     robot.place(x, y, direction);
     robot.left();
     expect(robot.getCurrentPosition().direction).toEqual("WEST");

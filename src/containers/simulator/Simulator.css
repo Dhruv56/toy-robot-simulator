@@ -12,3 +12,12 @@
   font-size: 30px;
   text-align: center;
 }
+
+.robot-simulator {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-container {
+  flex: 1;
+}

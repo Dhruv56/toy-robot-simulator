@@ -2,24 +2,20 @@ import "./Simulator.css";
 import React, { Component } from "react";
 import Robot from "../../core/robot/Robot";
 import Table from "../../core/table/Table";
-import { ROBOT_CONFIG, TABLE_CONFIG } from "../../config/Config";
-import { coordinates } from "../../constants";
-import Input from "../inputCommands/Input";
+import { ROBOT_CONFIG, TABLE_CONFIG } from "../../configs/Config";
+import Input from "../inputContainer/Input";
+import TableComponent from "../../components/table/TableComponent";
+import ToyRobot from "../../components/robot/Robot";
 
 class Simulator extends Component {
-  state = { coordinates: [] };
+  state = { coordinates: {} };
 
   componentWillMount() {
     const table = new Table(TABLE_CONFIG);
     this.robot = new Robot(ROBOT_CONFIG, table);
-
-    const a = coordinates.map(coordinate => (
-      <div className="robot-grid-item" id={`${coordinate.x}:${coordinate.y}`} />
-    ));
-    this.setState({ coordinates: a });
   }
 
-  applyCommands(commands) {
+  applyCommands = commands => {
     commands.map(command => {
       const robot = this.robot;
       let newCommand = "";
@@ -30,6 +26,7 @@ class Simulator extends Component {
         placeParams = newCommand[1];
         command = newCommand[0];
       }
+      command = command.toUpperCase();
       switch (command) {
         case "PLACE":
           const b = placeParams.split(",");
@@ -51,40 +48,30 @@ class Simulator extends Component {
           break;
       }
     });
-  }
+  };
 
   placeRobot = finalPosition => {
-    const newCoordinates = coordinates.map(coordinate => {
-      if (coordinate.x == finalPosition.x && finalPosition.y == coordinate.y) {
-        return (
-          <div
-            className="robot-grid-item"
-            id={`${coordinate.x}:${coordinate.y}`}
-          >
-            {5}
-          </div>
-        );
-      }
-      return (
-        <div
-          className="robot-grid-item"
-          id={`${coordinate.x}:${coordinate.y}`}
-        />
-      );
-    });
-
-    this.setState({ coordinates: newCoordinates });
+    this.setState({ coordinates: finalPosition });
   };
 
   render() {
+    const { tableLengthX, tableLengthY } = TABLE_CONFIG;
     return (
-      <div className="App">
-        <div className="robot-container">{this.state.coordinates}</div>
-        <Input
-          robot={this.robot}
-          placeRobot={this.placeRobot}
-          applyCommands={this.applyCommands}
-        />
+      <div className="robot-simulator">
+        <TableComponent
+          height={tableLengthY}
+          width={tableLengthX}
+          coordinates={this.state.coordinates}
+        >
+          <ToyRobot direction={this.state.coordinates.direction} />
+        </TableComponent>
+        <div className="input-container">
+          <Input
+            robot={this.robot}
+            placeRobot={this.placeRobot}
+            applyCommands={this.applyCommands}
+          />
+        </div>
       </div>
     );
   }

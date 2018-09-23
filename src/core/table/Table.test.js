@@ -1,4 +1,4 @@
-import { TABLE_CONFIG } from "../../config/Config";
+import { TABLE_CONFIG } from "../../configs/Config";
 import Table from "./Table";
 
 describe("validating x and y on the table", () => {
