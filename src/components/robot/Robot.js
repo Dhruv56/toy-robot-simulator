@@ -1,20 +1,20 @@
 import "./Robot.css";
 import React from "react";
-import robot from "../../assets/robot.png";
+import robot from "../../assets/robot-north.png";
 
 /**
- * Stateless robot component
+ * Robot component
  *
  * @class ToyRobot
  * @extends {React.Component}
  */
 class ToyRobot extends React.Component {
   render() {
-    // const direction = this.props.direction;
-    const direction = "";
+    let { direction } = this.props;
+    direction = direction ? direction.toLowerCase() : "";
     return (
       <div>
-        <img alt="toy-robot" className={`robot ${direction}`} src={robot} />
+        <div className={`robot ${direction}`} />
       </div>
     );
   }

@@ -12,6 +12,7 @@ describe("The Robot", () => {
     robot = new Robot(ROBOT_CONFIG, table);
   });
 
+  //PLACE command
   test("Should throw an error if x,y or direction is missing from the PLACE command", () => {
     function place() {
       robot.place();
@@ -82,18 +83,6 @@ describe("The Robot", () => {
     ).toBe(true);
   });
 
-  // test('should have "isFirstStepMade = false" before initial PLACE', () => {
-  //   expect(robot.isFirstStepMade()).toBe(false);
-  // });
-
-  // test('should set "isFirstStepMade = true" upon successful initial PLACE', () => {
-  //   let x = 3;
-  //   let y = 3;
-  //   let direction = "south";
-  //   robot.place(x, y, direction);
-  //   expect(robot.isFirstStepMade()).toBe(true);
-  // });
-
   test("should return itself if PLACE was successful", () => {
     const x = 1;
     const y = 1;
@@ -102,6 +91,7 @@ describe("The Robot", () => {
     expect(robot.place(x, y, direction)).toEqual(robot);
   });
 
+  //MOVE command
   test("should not be able to step out of the table", () => {
     let x = 4,
       y = 0,
@@ -113,6 +103,16 @@ describe("The Robot", () => {
     expect(move).toThrowError(new Error(Errors.wrongMove));
   });
 
+  test("should move n steps", () => {
+    let x = 0,
+      y = 0,
+      direction = "north";
+    robot.place(x, y, direction);
+    robot.move(4);
+    expect(robot.report()).toEqual({ x: 0, y: 4, direction: "NORTH" });
+  });
+
+  //REPORT command
   test("should successfully make a correct move", () => {
     const x = 1;
     const y = 1;
@@ -120,7 +120,7 @@ describe("The Robot", () => {
 
     robot.place(x, y, direction);
     robot.move();
-    const currentPosition = robot.getCurrentPosition();
+    const currentPosition = robot.report();
 
     expect(
       currentPosition.x == x &&
@@ -129,6 +129,7 @@ describe("The Robot", () => {
     ).toBe(true);
   });
 
+  //RIGHT command
   test("should turn right", () => {
     const x = 1;
     const y = 1;
@@ -138,6 +139,7 @@ describe("The Robot", () => {
     expect(robot.getCurrentPosition().direction).toEqual("EAST");
   });
 
+  //LEFT command
   test("should turn left", () => {
     const x = 1;
     const y = 1;

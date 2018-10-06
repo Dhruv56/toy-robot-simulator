@@ -16,6 +16,44 @@ describe("Simulator", () => {
     });
   });
 
+  it("should split the commands with /n", () => {
+    const rawCommand = "PLACE 1,1,NORTH\nMOVE";
+    const extractedCommands = ["PLACE 1,1,NORTH", "MOVE"];
+    expect(simulatorWrapper.instance().extractCommands(rawCommand)).toEqual(
+      extractedCommands
+    );
+  });
+
+  it("should execute all the commands and set coordinates accordingly", () => {
+    const rawCommand = "PLACE 1,1,NORTH\nMOVE";
+    simulatorWrapper.instance().executeAllCommands(rawCommand);
+
+    expect(simulatorWrapper.state("coordinates")).toEqual({
+      x: 1,
+      y: 2,
+      direction: "NORTH"
+    });
+  });
+
+  it("should execute commands step by step and set coordinates accordingly", () => {
+    const rawCommand = "PLACE 1,1,NORTH\nMOVE";
+    simulatorWrapper.instance().executeCommandStepByStep(rawCommand);
+
+    expect(simulatorWrapper.state("coordinates")).toEqual({
+      x: 1,
+      y: 1,
+      direction: "NORTH"
+    });
+
+    simulatorWrapper.instance().executeCommandStepByStep(rawCommand);
+
+    expect(simulatorWrapper.state("coordinates")).toEqual({
+      x: 1,
+      y: 2,
+      direction: "NORTH"
+    });
+  });
+
   // it("should get the commands as an array", () => {
   //   const applyCommands = jest.fn();
   //   const inputWrapper = shallow(<Input applyCommands={applyCommands} />);

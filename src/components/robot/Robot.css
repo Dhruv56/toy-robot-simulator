@@ -2,3 +2,27 @@
   height: 30px;
   width: 30px;
 }
+
+.north {
+  background-image: url('../../assets/robot-north.png');
+  background-size: 100%;
+  background-size: contain;
+}
+
+.east {
+  background-image: url('../../assets/robot-east.png');
+  background-size: 100%;
+  background-size: contain;
+}
+
+.west {
+  background-image: url('../../assets/robot-west.png');
+  background-size: 100%;
+  background-size: contain;
+}
+
+.south {
+  background-image: url('../../assets/robot-south.png');
+  background-size: 100%;
+  background-size: contain;
+}

@@ -1,6 +1,13 @@
 import "./Input.css";
 import React, { Component } from "react";
+import { EXECUTE_STEP_BY_STEP, EXECUTE_ALL, RESET } from "./InputConstants";
 
+/**
+ * @author Dhruv Soni
+ *
+ * @class Input
+ * @extends {Component}
+ */
 class Input extends Component {
   constructor() {
     super();
@@ -20,7 +27,9 @@ class Input extends Component {
   };
 
   reset = () => {
-    this.setState({ command: "" });
+    this.setState({ command: "" }, function() {
+      this.props.resetPosition();
+    });
   };
 
   render() {
@@ -28,18 +37,18 @@ class Input extends Component {
       <div>
         <textarea
           className="input-commands"
-          rows={10}
+          rows={15}
           cols={20}
           onChange={this.handleInputChange}
           value={this.state.command}
         />
         <button className="execute-commands" onClick={this.handleExecuteAll}>
-          Execute all
+          {EXECUTE_ALL}
         </button>
         <button onClick={this.handleExecuteStepByStep}>
-          Execute step by step
+          {EXECUTE_STEP_BY_STEP}
         </button>
-        <button onClick={this.reset}>Reset</button>
+        <button onClick={this.reset}>{RESET}</button>
       </div>
     );
   }

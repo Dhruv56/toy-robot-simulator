@@ -16,16 +16,43 @@
 .robot-simulator {
   display: flex;
   flex-direction: row;
+  margin-top: 40px;
+  margin-right: 100px;
 }
 
 .input-container {
   flex: 1;
 }
 
+.output-container {
+  flex: 1;
+}
+
 .table {
   flex: 1;
+  margin-left: 100px;
 }
 
 .input-output-container {
   display: flex;
+  flex-direction: column;
+}
+
+.robot-logo {
+  animation: robot-logo-spin infinite 20s linear;
+  height: 80px;
+  background-color: lightskyblue;
+  border-radius: 50px;
+  padding: 5px;
+  border: 6px solid;
+  margin-top: 20px;
+}
+@keyframes robot-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

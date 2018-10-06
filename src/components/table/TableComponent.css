@@ -1,25 +1,24 @@
 .table-grid-row {
   display: grid;
+  grid-column-gap: 5px;
   grid-template-columns: auto auto auto auto auto;
-  background-color: #2196F3;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  background-color: black;
+  padding: 3px 5px;
 }
 
 .table-grid-item {
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  background-color: lightskyblue;
   /* padding: 15px 0; */
   width: 92px;
-  height: 64px;
+  height: 92px;
   justify-content: center;
 }
 
 .table-container {
-  width: 800px;
-  height: 800px;
+  width: 495px;
+  /* height: 600px; */
 }
 
 .table-cell {

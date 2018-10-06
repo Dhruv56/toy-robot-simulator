@@ -1,3 +1,9 @@
+/**
+ * Table class - contains only one method isOutOfTable
+ *
+ * @export
+ * @class Table
+ */
 export default class Table {
   constructor(tableConfig) {
     this.tableConfig = tableConfig;
